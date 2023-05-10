@@ -1,5 +1,7 @@
+import 'package:crypto_application_git/theme/theme_cubit.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 import '../api/crypto_api.dart';
@@ -16,12 +18,12 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   List<CryptoModel> cryptoList =[];
   bool _isListUpdated = false;
+  bool isDark = false;
 
   @override
   void initState() {
     super.initState();
     _getCryptoList();
-    print('aaaaa:' + cryptoList.toString());
   }
 
 
@@ -39,7 +41,16 @@ class _HomeScreenState extends State<HomeScreen> {
         automaticallyImplyLeading: false,
         actions: [
           IconButton(
-            onPressed: null,
+           onPressed: (){
+             setState(() {
+               if(isDark == false){
+                 isDark = true;
+               }else{
+                 isDark = false;
+               }
+             });
+            BlocProvider.of<ThemeCubit>(context).themeChanges(isDark);
+           },
             icon: Icon(
               Icons.nightlight,
               color: Colors.white,
